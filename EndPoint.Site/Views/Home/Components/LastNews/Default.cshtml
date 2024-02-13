@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EndPoint.Site.Models.PageViewModel>
+@using EndPoint.Site.Extention;
+
+<section class="last-news-section border-radius margin-top-60">
+    <header><i class="icons icon-doc-2"></i>  <h3>آخرین آخبار ارسالی</h3> </header>
+    <ul>
+
+        @{
+
+            foreach (var i in Model)
+            {
+                <li>
+                    <img class="border-radius" src="@i.Image">
+                    <h2> <a href="~/Page/GetPage?id=@i.id"> @i.PageTitle </a></h2>
+                    <p>
+                        @i.ShortDescription
+                    </p>
+                    <span class="date-publish"><i class="fa fa-calendar"></i> انتشار : @i.CreateDate.toShamsi() </span>
+                    <a href="~/Page/GetPage?id=@i.id" class="more-link"><i class="icons icon-more"></i></a>
+                </li>
+            }
+        }
+    </ul>
+
+</section>

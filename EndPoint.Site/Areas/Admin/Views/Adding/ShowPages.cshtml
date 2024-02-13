@@ -1,0 +1,306 @@
+﻿
+@{
+    ViewData["Title"] = "ShowPages";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<EndPoint.Site.Areas.Admin.Models.PageModelView>
+@*@model IEnumerable<Domain.News.Page>*@
+
+@section Csss{
+    <link rel="stylesheet" href="~/AdminPage/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <style>
+        img {
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+
+
+}
+
+
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">جدول داده مثال ۲</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+
+
+                        <thead>
+                            <tr>
+                                <th>عکس</th>
+                                <th width="100px">گروه</th>
+                                <th width="100px">عنوان</th>
+                                <th>توضیح کوتاه</th>
+                                <th width="120px">امکانات</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+
+                            @{
+                                foreach (var i in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src=" @i.Image2" alt="Alternate Text" />
+                                        </td>
+                                        <td>@i.PageGroup</td>
+                                        <td>@i.PageTitle</td>
+                                        <td>@i.ShortDescription</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-info btn-flat" href="~/Page/GetPage?id=@i.id">
+                                                    <i class="fa fa-info"></i>
+                                                </a>
+                                                <a class="btn btn-warning btn-flat" href="~/Admin/Adding/EditePage/@i.id">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-danger btn-flat" href="https://www.zoomg.ir/cinema-news/">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                                @*<button type="button" class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash"></i></button>*@
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+
+
+                        </tbody>
+
+
+                        <tfoot>
+                            <tr>
+                                <th>عکس</th>
+                                <th>گروه</th>
+                                <th>عنوان</th>
+                                <th>توضیح کوتاه</th>
+                                <th>امکانات</th>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+
+
+<div class="modal modal-info fade" id="modal-info">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">مشخصات</h4>
+            </div>
+            <div class="modal-body">
+                <p>محتوا</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">خروج</button>
+                <button type="button" class="btn btn-outline">ذخیره</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal modal-warning fade" id="modal-warning">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">ویرایش</h4>
+            </div>
+            <div class="modal-body" id="EditeModal">
+                <p>محتوا</p>
+                @*@await Component.InvokeAsync("EditePage")*@
+                <div class="box box-primary">
+                    <form role="form" enctype="multipart/form-data" asp-action="CreatePage" asp-controller="Adding" method="post">
+                        <div class="box-body">
+
+
+                            <div class="form-group">
+                                <label>معمولی</label>
+                                <select class="form-control select2" name="PageGroup" style="width: 100%;">
+                                    @{
+                                        int s = 0;
+                                        foreach (var i in ViewBag.groups)
+                                        {
+                                            if (s == 0)
+                                            {
+                                                <option selected="selected">@i.GroupTitle</option>
+                                            }
+                                            else
+                                            {
+                                                <option>@i.GroupTitle</option>
+
+                                            }
+                                            s++;
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>انتخاب تاریخ شمسی با خروجی تایم استمپ </label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" id="tarikh" class="form-control pull-right">
+                                    <input type="text" name="CreateDate" id="tarikhAlt" class="form-control pull-right" hidden>
+                                </div>
+                                <!-- /.input group -->
+                                <br>
+                            </div>
+
+                            <div class="form-group  ">
+                                <label for="exampleInputEmail1">عنوان</label>
+                                <input type="text" name="PageTitle" class="form-control" id="exampleInputEmail1" placeholder="عنوان">
+                            </div>
+
+                            <div class="form-group ">
+                                <label>توضیح کوتاه</label>
+                                <textarea class="form-control" name="ShortDescription" rows="3" placeholder="توضیح کوتاه"></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                @*<textarea class="form-control" name="Text" rows="3" placeholder="متن"></textarea>*@
+                                <textarea id="my-textarea" name="Text"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">ارسال فایل</label>
+                                <input type="file" name="Image" id="exampleInputFile">
+
+                                <p class="help-block">متن راهنما</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">کلمات کلیدی</label>
+                                <input type="text" name="Tags" class="form-control" id="exampleInputEmail1" placeholder="کلمات کلیدی">
+                            </div>
+
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> مرا به خاطر بسپار
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">ارسال</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">خروج</button>
+                <button type="button" class="btn btn-outline">ذخیره</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="modal modal-danger fade" id="modal-danger">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">حذف</h4>
+            </div>
+            <div class="modal-body">
+                <p>محتوا</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">خروج</button>
+                <button type="button" class="btn btn-outline">ذخیره</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts{
+
+    <!-- DataTables -->
+    <script src="~/AdminPage/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/AdminPage/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('#example1').DataTable()
+
+        })
+    </script>
+
+
+
+
+
+    @*<script>
+            $(document).ready(function () {
+                $("button.btn-warning").click(function () {
+                    $.ajax({
+                        url: "/Admin/Adding/EditePage",
+                        method: "get",
+                        data: { id: $(this).attr('id') }
+
+                    }).done(function (data) {
+                        $("#EditeModal").html(data)
+                    });
+
+                })
+            });
+        </script>*@
+
+}
+
+

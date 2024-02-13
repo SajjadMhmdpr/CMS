@@ -1,0 +1,101 @@
+﻿@using EndPoint.Site.Extention
+@model EndPoint.Site.Areas.Admin.Models.PageModelView
+
+
+
+
+
+
+
+
+
+    <form role="form" enctype="multipart/form-data" asp-action="CreatePage" asp-controller="Adding" method="post">
+        <div class="box-body">
+
+
+            <div class="form-group">
+                <label>معمولی</label>
+                <select class="form-control select2" name="PageGroup" style="width: 100%;">
+                    @{
+                        int s = 0;
+                        foreach (var i in ViewBag.groups)
+                        {
+                            if (s == 0)
+                            {
+                                <option selected="selected">@i.GroupTitle</option>
+                            }
+                            else
+                            {
+                                <option>@i.GroupTitle</option>
+
+                            }
+                            s++;
+                        }
+
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>انتخاب تاریخ شمسی با خروجی تایم استمپ </label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" id="tarikh" class="form-control pull-right">
+                    <input type="text" name="CreateDate" id="tarikhAlt" class="form-control pull-right" hidden>
+                </div>
+                <!-- /.input group -->
+                <br>
+            </div>
+
+            <div class="form-group  ">
+                <label for="exampleInputEmail1">عنوان</label>
+                <input type="text" name="PageTitle" class="form-control" id="exampleInputEmail1" placeholder="عنوان">
+            </div>
+
+            <div class="form-group ">
+                <label>توضیح کوتاه</label>
+                <textarea class="form-control" name="ShortDescription" rows="3" placeholder="توضیح کوتاه"></textarea>
+            </div>
+
+
+            <div class="form-group">
+                @*<textarea class="form-control" name="Text" rows="3" placeholder="متن"></textarea>*@
+                <textarea id="my-textarea" name="Text"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputFile">ارسال فایل</label>
+                <input type="file" name="Image" id="exampleInputFile">
+
+                <p class="help-block">متن راهنما</p>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputFile">کلمات کلیدی</label>
+                <input type="text" name="Tags" class="form-control" id="exampleInputEmail1" placeholder="کلمات کلیدی">
+            </div>
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> مرا به خاطر بسپار
+                </label>
+            </div>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">ارسال</button>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+

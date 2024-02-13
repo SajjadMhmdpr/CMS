@@ -1,0 +1,49 @@
+﻿@model IEnumerable<EndPoint.Site.Models.PageGroupsViewModel>
+
+
+
+@{
+    if (Model.ElementAt(0).Number == -5)
+    {
+        <li>
+            <span>گروه های خبری</span>
+            <ul>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <li><a href="">@item.GroupTitle</a></li>
+                    }
+                }
+
+            </ul>
+        </li>
+        
+
+    }
+    else
+    {
+
+        <section class="category-section border-radius">
+            <header><i class="fa fa-folder-open-o"></i> <h3> دسته بندی ها </h3></header>
+            <ul>
+                @{
+
+                    foreach (var i in Model)
+                    {
+                        <li><a href=""> @i.GroupTitle  <span>@i.Number</span></a></li>
+
+                    }
+                }
+            </ul>
+        </section>
+
+    }
+
+
+
+
+
+
+}
+
+

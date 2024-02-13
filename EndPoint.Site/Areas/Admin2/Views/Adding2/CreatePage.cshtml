@@ -1,0 +1,172 @@
+﻿@model EndPoint.Site.Areas.Admin.Models.PageModelView
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "CreatePage";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Csss{
+    <link rel="stylesheet" href="~/AdminPage/bower_components/select2/dist/css/select2.min.css">
+    <!-- babakhani datepicker -->
+    <link rel="stylesheet" href="~/AdminPage/dist/css/persian-datepicker-0.4.5.min.css" />
+
+}
+
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">مثال ساده</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form role="form" enctype="multipart/form-data" asp-action="CreatePage" asp-controller="Adding" method="post">
+        <div class="box-body">
+
+
+            <div class="form-group">
+                <label>معمولی</label>
+                <select class="form-control select2" asp-for="PageGroup" name="PageGroup" style="width: 100%;">
+                    @{
+                        int s = 0;
+                        foreach (var i in ViewBag.groups)
+                        {
+                            if (s == 0)
+                            {
+                                <option selected="selected">@i.GroupTitle</option>
+                            }
+                            else
+                            {
+                                <option>@i.GroupTitle</option>
+
+                            }
+                            s++;
+                        }
+
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>انتخاب تاریخ شمسی با خروجی تایم استمپ </label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" id="tarikh" class="form-control pull-right">
+                    <input type="text" asp-for="CreateDate" name="CreateDate" id="tarikhAlt" class="form-control pull-right hidden" >
+                </div>
+                <!-- /.input group -->
+                <br>
+            </div>
+
+            <div class="form-group  ">
+                <label for="exampleInputEmail1">عنوان</label>
+                <input type="text" asp-for="PageTitle" name="PageTitle" class="form-control" id="PageTitle" placeholder="عنوان">
+            </div>
+
+            <div class="form-group ">
+                <label>توضیح کوتاه</label>
+                <textarea class="form-control" asp-for="ShortDescription" id="ShortDescription" name="ShortDescription" rows="3" placeholder="توضیح کوتاه"></textarea>
+            </div>
+
+
+            <div class="form-group">
+                @*<textarea class="form-control" name="Text" rows="3" placeholder="متن"></textarea>*@
+                <textarea id="my-textarea" asp-for="Text" name="Text"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputFile">ارسال فایل</label>
+                @{
+                    if (Model.Image2 != null)
+                    {
+                        <img src="@Model.Image2" alt="Alternate Text" />
+                    }
+                }
+                <input type="file" name="Image" id="exampleInputFile">
+
+                <p class="help-block">متن راهنما</p>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputFile">کلمات کلیدی</label>
+                <input type="text" asp-for="Tags" name="Tags" class="form-control" id="exampleInputEmail1" placeholder="کلمات کلیدی">
+            </div>
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> مرا به خاطر بسپار
+                </label>
+            </div>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">ارسال</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+@section Scripts{
+
+
+    <script src="~/AdminPage/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <!-- babakhani datepicker -->
+    <script src="~/AdminPage/dist/js/persian-date-0.1.8.min.js"></script>
+    <script src="~/AdminPage/dist/js/persian-datepicker-0.4.5.min.js"></script>
+    <!-- CK Editor -->
+    <script src="~/AdminPage/bower_components/ckeditor/ckeditor.js"></script>
+    <script src="~/AdminPage/bower_components/ckeditor/adapters/jquery.js"></script>
+
+
+
+
+    <script>
+        $(function () {
+            $('#my-textarea').ckeditor();
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+
+
+            $('#tarikh').persianDatepicker({
+                altField: '#tarikhAlt',
+                altFormat: 'X',
+                //format: 'D MMMM YYYY HH:mm a',
+                format: 'L',
+                observer: true,
+                timePicker: {
+                    enabled: true
+                },
+            });
+
+
+            $('.select2').select2();
+
+
+
+
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            
+            
+
+        });
+    </script>
+
+
+
+
+}

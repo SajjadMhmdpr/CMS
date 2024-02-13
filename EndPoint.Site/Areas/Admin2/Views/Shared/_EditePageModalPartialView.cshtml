@@ -1,0 +1,111 @@
+﻿@model EndPoint.Site.Areas.Admin.Models.PageModelView
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+
+
+
+<form enctype="multipart/form-data" asp-action="SubmitEditePageModal" asp-controller="Home2" method="post"
+      id="CreatePageForm" data-ajax="true" data-ajax-begin="StartLoading()"
+      data-ajax-success="CreatePageFormSubmited">
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+
+
+    <div class="modal-body">
+        <!--Groups-->
+        <div class="form-group">
+            <label class="control-label">انتخاب گروه</label>
+            <select class="form-select" aria-label="Default select example" asp-for="PageGroup" name="PageGroup">
+                @{
+                    int s = 0;
+                    foreach (var i in ViewBag.groups)
+                    {
+                        if (s == 0)
+                        {
+                            <option selected="selected">@i.GroupTitle</option>
+                        }
+                        else
+                        {
+                            <option>@i.GroupTitle</option>
+
+                        }
+                        s++;
+                    }
+
+                }
+            </select>
+        </div>
+
+        <!--date-->
+        <div class="form-group">
+            <label class="control-label">انتخاب تاریخ </label>
+            <input id="cleander" asp-for="CreateDate" name="CreateDate" autocomplete="off" />
+            @*<input type="text" id="cleander" />*@
+            <span class="text-danger" asp-validation-for="CreateDate"></span>
+
+        </div>
+
+        <!--PageTitle-->
+        <div class="form-group">
+            <label class="control-label">عنوان</label>
+            <input type="text" asp-for="PageTitle" name="PageTitle" class="form-control" id="PageTitle" placeholder="عنوان">
+            <span class="text-danger" asp-validation-for="PageTitle"></span>
+        </div>
+
+        <!--ShortDescription-->
+        <div class="form-group ">
+            <label class="control-label">توضیح کوتاه</label>
+            <textarea class="form-control" asp-for="ShortDescription" id="ShortDescription" name="ShortDescription" rows="2" placeholder="توضیح کوتاه"></textarea>
+            <span class="text-danger" asp-validation-for="ShortDescription"></span>
+        </div>
+
+        <!--Text-->
+        <div class="form-group ">
+            <label class="control-label">متن</label>
+            <textarea class="form-control" asp-for="Text" id="ShortDescription" name="Text" rows="4" placeholder="متن"></textarea>
+            <span class="text-danger" asp-validation-for="Text"></span>
+        </div>
+
+        <!--file-->
+        <div class="form-group mt-1">
+            <label class="control-label" for="exampleInputFile">ارسال فایل</label>
+            @{
+                if (Model.Image2 != null)
+                {
+                    <img src="@Model.Image2" alt="Alternate Text" />
+                    <input type="file" asp-for="Image" name="Image" id="exampleInputFile" />
+                }
+                else
+                {
+                    <input type="file" asp-for="Image" name="Image" id="exampleInputFile" required />
+                    <span class="text-danger" asp-validation-for="Image"></span>
+
+                }
+            }
+
+        </div>
+
+        <!--Tags-->
+        <div class="form-group">
+            <label class="control-label" for="exampleInputFile">کلمات کلیدی</label>
+            <input type="text" asp-for="Tags" name="Tags" class="form-control" placeholder="کلمات کلیدی">
+            <span class="text-danger" asp-validation-for="Tags"></span>
+        </div>
+
+        <input type="text" asp-for="id" name="id" />
+    </div>
+
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Edite</button>
+
+    </div>
+</form>

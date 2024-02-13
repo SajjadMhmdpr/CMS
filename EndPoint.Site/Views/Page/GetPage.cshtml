@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "GetPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Domain.News.Page
+@using EndPoint.Site.Extention
+
+
+
+
+
+<div class="container margin-top-30">
+    <div class="row">
+
+        <div class=" col-sm-12 col-xs-12 col-md-8">
+
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">خانه </a></li>
+                <li class="breadcrumb-item"><a href="#">اخبار </a></li>
+                <li class="breadcrumb-item"><a href="#">دسته بندی  </a></li>
+                <li class="breadcrumb-item active">@Model.PageTitle </li>
+            </ul>
+
+            <section class="single-news border-radius">
+                <header><h2> @Model.PageTitle </h2> <span> <i class="fa fa-calendar"></i>  انتشار : @Model.CreateDate.toShamsi()</span></header>
+                <article id="PageText">
+
+                    @Html.Raw(Model.Text)
+                </article>
+            </section>
+
+            <div class="keywords border-radius">
+                
+                @{
+                    if (Model.Tags != null)
+                    {
+                        foreach (var i in Model.Tags.Split(","))
+                        {
+                        <a href="~/Page/Search?s=@i"> @i </a>
+                            }
+                        }
+                    }
+
+            </div>
+
+
+            <section class="comment-layer">
+                <header> <i class="fa fa-comments"></i><h5> دیدگاه کاربران </h5><span> @Model.Comments.Count دیدگاه </span> </header>
+                <ul id="ShowComments">
+
+
+                    @await Html.PartialAsync("_CommentListPartialView", Model.Comments)
+
+
+                </ul>
+
+                <h6> شما هم دیدگاه خود را ارسال کنید </h6>
+                <form id="CommentForm" class="comment-form" asp-action="SetComment" asp-controller="Comment" method="post">
+                    <div>
+                        <input placeholder=" نام و نام خانوادگی" name="Name" type="text">
+                        <input placeholder=" ایمیل خود را وارد نمایید " name="Email" type="email">
+                    </div>
+                    <input name="PageId" hidden value="@Model.PageId" />
+                    <textarea placeholder=" متن دیدگاه" name="Text"> </textarea>
+                    <input value="ثبت دیدگاه ارزشمند شما " type="submit">
+                </form>
+            </section>
+
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+@section Scripts{
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#CommentForm").submit(function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+
+                $.ajax({
+                    url: "/Comment/SetComment",
+                    method: "Post",
+                    data: form.serialize(),
+
+                }).done(function (res) {
+                    $("#ShowComments").html(res);
+                    $("input[type='text'],[type='email']").val("");
+                    $("textarea[name='Text']").val("");
+
+                })
+
+
+            })
+
+        })
+    </script>
+
+
+}

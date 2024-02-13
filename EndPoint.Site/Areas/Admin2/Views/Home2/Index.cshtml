@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "ShowPages";
+    Layout = "~/Areas/Admin2/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<EndPoint.Site.Areas.Admin.Models.PageModelView>
+
+@section Csss{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="~/DatePiker/dist/kamadatepicker.min.css" rel="stylesheet" />
+
+
+    <style>
+        img {
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+}
+
+<div class="m-3">
+    <button type="button" class="btn btn-success" onclick="LoadCreatePageModal()">Create Page</button>
+</div>
+
+<div class="row">
+    <div class="col-md-12 table-responsive" id="MainDiv">
+
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>عکس</th>
+                    <th>گروه</th>
+                    <th>عنوان</th>
+                    <th>توضیح کوتاه</th>
+                    <th>امکانات</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    foreach (var i in Model)
+                    {
+                        <tr id="Page-@i.id">
+                            <td>
+                                <img src=" @i.Image2" alt="Alternate Text" />
+                            </td>
+                            <td>@i.PageGroup</td>
+                            <td>@i.PageTitle</td>
+                            <td>@i.ShortDescription</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-info btn-flat" href="~/Page/GetPage?id=@i.id">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
+                                    <a class="btn btn-warning btn-flat"onclick="LoadEditePageModal(@i.id)">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a class="btn btn-danger btn-flat" onclick="DeletePage(@i.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                    
+                                    @*<button type="button" class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash"></i></button>*@
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+</div>
+
+    @*<input type="text" id="cleander" />*@
+
+
+
+<div class="modal fade" id="MyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="ModalContentBody">
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts{
+    <script src="~/DatePiker/dist/kamadatepicker.min.js"></script>
+
+
+
+}
+
+
+
+
+
+
+
+
